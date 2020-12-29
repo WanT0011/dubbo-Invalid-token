@@ -1,0 +1,74 @@
+server:
+  port: 18001
+#spring:
+#  profiles: bcl-dubbo
+dubbo:
+  scan:
+    #扫描Dubbo服务的路径
+    base-packages: com.want.provider.dubbo.api
+  cloud:
+    #订阅的服务
+    subscribed-services: ''
+  protocols:
+    dubbo:
+      #dubbo 端口
+      port: 38001
+  #全局配置
+  provider:
+    #服务端的统一版本
+    version: 1.0.0
+    #默认200，服务线程池大小(固定大小)
+    threads: 400
+    # 默认8388608(=8M)， 请求及响应数据包大小限制，单位：字节
+    payload: 31457280
+    #dubbo协议缺省为netty，http协议缺省为servlet, 协议的服务器端实现类型，比如：dubbo协议的mina,netty等，http协议的jetty,servlet等
+    server: netty
+    #dubbo协议缺省为netty,协议的客户端实现类型，比如：dubbo协议的mina,netty等
+    client: netty
+    #缺省为dubbo，协议编码方式
+    codec: dubbo
+    #dubbo协议缺省为hessian2，rmi协议缺省为java，http协议缺省为json。协议序列化方式，当协议支持多种序列化方式时使用，比如：dubbo协议的dubbo,hessian2,java,compactedjava，以及http协议的json,xml等
+    serialization: hessian2
+    #默认为fixed，线程池类型，可选：fixed/cached/limit(2.5.3以上)/eager(2.6.x以上)
+    threadpool: fixed
+    #默认为0，代表不限制，服务提供方最大可接受长连接数，设置为1000，主要是为了防止服务端被大量连接撑挂，服务提供方限制醉倒连接数，实现服务提供方自我保护
+    accepts: 1000
+    #默认为0，线程池队列大小，当线程池满时，排队等待执行的队列大小，建议不要设置，当线程池满时应立即失败，重试其它服务提供机器，而不是排队，除非有特殊需求。
+    queues: 0
+    #默认cpu个数+1，io线程池大小(固定大小)，IO线程池，接收网络读写中断，以及序列化和反序列化，不处理业务，业务线程池参见threads配置，此线程池和CPU相关，不建议配置。https://www.cnblogs.com/liuhouhou/p/8961221.html
+    #iothreads:
+    #默认UTF-8， 序列化编码
+    charset: UTF-8
+    #远程调用超时时间，默认 1000ms。如果，配置了consumer配置会被覆盖
+    timeout: 5000
+    #重试次数, 默认为2，远程服务调用重试次数，不包括第一次调用，不需要重试请设为0, 仅在cluster为failback/failover时有效
+    retries: 2
+    #默认random，负载均衡策略，可选值：random,roundrobin,leastactive，分别表示：随机，轮询，最少活跃调用
+    loadbalance: roundrobin
+    #默认为0，不限制，每服务消费者每服务每方法最大并发调用数，设置为20
+    actives: 20
+    #令牌验证，为空表示不开启，如果为true，表示随机生成动态令牌
+    token: true
+    #dubbo协议缺省为all, 协议的消息派发方式，用于指定线程模型，比如：dubbo协议的all, direct, message, execution, connection等。
+    #http://dubbo.apache.org/zh-cn/docs/user/demos/thread-model.html
+    #https://my.oschina.net/u/4327970/blog/3337320
+    dispatcher: message
+    #删除默认调用拦截异常扩展点, 增加链路扩展点
+    filter: -exception
+    parameters:
+      tracing: tracing
+    #服务分组，当一个接口有多个实现，可以用分组区分, 消费端和服务端分组一直才能互相访问
+    #group: ${spring.application.name}
+  # consumer配置
+  consumer:
+    #关闭启动检查
+    #check: false
+    #默认为0代表创建一个共享连接，限制当前服务与每个其他服务提供者的最大连接数，优先级比Consumer的connection优先级低，rmi、http、hessian等短连接协议表示限制连接数，dubbo等长连接协表示建立的长连接个数
+    connections: 0
+    #默认failover，集群方式，可选：failover/failfast/failsafe/failback/forking
+    cluster: failover
+    #是否启用JSR303标准注解验证，如果启用，将对方法参数上的注解进行校验
+    validation: true
+    #增加链路扩展点
+    parameters:
+      tracing: tracing

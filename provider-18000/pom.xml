@@ -11,17 +11,7 @@
 
     <artifactId>provider-18000</artifactId>
 
-<!--    <dependencies>-->
-<!--        <dependency>-->
-<!--            <artifactId>provider-api</artifactId>-->
-<!--            <groupId>com.want</groupId>-->
-<!--            <version>1.0-SNAPSHOT</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.xkw.bcl</groupId>-->
-<!--            <artifactId>bcl-core</artifactId>-->
-<!--        </dependency>-->
-<!--    </dependencies>-->
+
 
 
     <dependencies>

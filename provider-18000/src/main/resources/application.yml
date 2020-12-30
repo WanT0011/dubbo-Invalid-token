@@ -1,7 +1,8 @@
 server:
   port: 18000
-#spring:
-#  profiles: bcl-dubbo
+spring:
+  profiles:
+    include: bcl-all
 dubbo:
   scan:
     #扫描Dubbo服务的路径
